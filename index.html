@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>People, Process, AI</title>
+  <meta name="description" content="A practical guide for charities: how to move from experimenting with AI to real impact for the people you serve. Download the full slide deck.">
+  <meta name="theme-color" content="#0a1a3a">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a1a3a;
+      --bg-2: #0f2e66;
+      --card: rgba(255,255,255,0.05);
+      --card-border: rgba(201,216,242,0.16);
+      --text: #ffffff;
+      --muted: #c9d8f2;
+      --subtle: #8fa6c8;
+      --sky: #38bdf8;
+      --blue: #2563eb;
+      --amber: #f59e0b;
+      --green: #10b981;
+      --red: #ef4444;
+      --radius: 16px;
+      --max: 1120px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--sky); }
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+    .skip { position: absolute; left: -999px; }
+    .skip:focus { left: 12px; top: 12px; background: #fff; color: #000; padding: 8px 12px; border-radius: 8px; z-index: 10; }
+
+    /* Nav */
+    .nav { position: sticky; top: 0; z-index: 5; background: rgba(10,26,58,0.85); backdrop-filter: blur(10px); border-bottom: 1px solid var(--card-border); }
+    .nav .container { display: flex; align-items: center; justify-content: space-between; height: 60px; gap: 16px; }
+    .brand { font-weight: 800; letter-spacing: -0.01em; color: var(--text); text-decoration: none; display: flex; gap: 6px; align-items: center; white-space: nowrap; }
+    .brand .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+    .nav-links { display: flex; gap: 20px; font-size: 14px; }
+    .nav-links a { color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--text); }
+    @media (max-width: 820px) { .nav-links { display: none; } }
+
+    /* Buttons */
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 999px; font-weight: 600; text-decoration: none; font-size: 15px; border: 1px solid transparent; transition: transform .15s ease, background .15s ease; }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: var(--amber); color: #1a1205; }
+    .btn-primary:hover { background: #fbb53a; }
+    .btn-ghost { border-color: var(--card-border); color: var(--text); }
+    .btn-ghost:hover { background: var(--card); }
+    .btn-sm { padding: 8px 14px; font-size: 14px; white-space: nowrap; }
+    @media (max-width: 420px) { .brand { font-size: 15px; } .brand .dot { display: none; } .btn-sm { padding: 7px 12px; font-size: 13px; } }
+    .btn svg { width: 18px; height: 18px; }
+
+    /* Hero */
+    .hero { padding: 88px 0 72px; background: radial-gradient(1200px 500px at 80% -10%, rgba(37,99,235,0.45), transparent 60%), radial-gradient(800px 400px at -10% 110%, rgba(56,189,248,0.18), transparent 60%); }
+    .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sky); margin: 0 0 14px; }
+    h1 { font-size: clamp(38px, 6vw, 68px); line-height: 1.04; letter-spacing: -0.03em; margin: 0 0 18px; font-weight: 800; }
+    h1 .accent { color: var(--amber); }
+    .lead { font-size: clamp(17px, 2vw, 20px); color: var(--muted); max-width: 640px; margin: 0 0 32px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .pillars { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 44px; }
+    .pill { padding: 8px 16px; border-radius: 999px; font-weight: 700; font-size: 14px; border: 1px solid; }
+    .pill.p { color: var(--sky); border-color: rgba(56,189,248,.4); background: rgba(56,189,248,.08); }
+    .pill.pr { color: #7aa5ff; border-color: rgba(37,99,235,.55); background: rgba(37,99,235,.14); }
+    .pill.ai { color: var(--amber); border-color: rgba(245,158,11,.45); background: rgba(245,158,11,.1); }
+    .pill-plus { color: var(--subtle); align-self: center; }
+
+    /* Sections */
+    section.block { padding: 80px 0; border-top: 1px solid var(--card-border); }
+    section.alt { background: linear-gradient(180deg, rgba(15,46,102,.35), rgba(15,46,102,0)); }
+    h2 { font-size: clamp(28px, 4vw, 40px); line-height: 1.12; letter-spacing: -0.02em; margin: 0 0 12px; font-weight: 800; }
+    .section-intro { color: var(--muted); max-width: 680px; margin: 0 0 40px; font-size: 17px; }
+    h3 { margin: 0 0 6px; font-size: 18px; letter-spacing: -0.01em; }
+    .source { font-size: 12.5px; color: var(--subtle); margin-top: 20px; }
+
+    .grid { display: grid; gap: 16px; }
+    .g2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .g3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .g4 { grid-template-columns: repeat(4, minmax(0,1fr)); }
+    @media (max-width: 900px) { .g4 { grid-template-columns: repeat(2, minmax(0,1fr)); } .g3 { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+    @media (max-width: 600px) { .g2, .g3, .g4 { grid-template-columns: 1fr; } }
+
+    .card { background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 22px; }
+    .card p { margin: 0; color: var(--muted); font-size: 15px; }
+
+    /* Stats */
+    .stat .num { font-size: 44px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; margin-bottom: 10px; color: var(--sky); }
+    .stat:nth-child(2) .num, .stat:nth-child(3) .num { color: var(--amber); }
+    .callout { margin-top: 24px; padding: 18px 22px; border-radius: var(--radius); background: rgba(245,158,11,.1); border: 1px solid rgba(245,158,11,.35); font-weight: 600; }
+
+    /* 10-20-70 */
+    .split { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: center; }
+    @media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
+    .bar { display: flex; height: 64px; border-radius: 14px; overflow: hidden; font-weight: 700; font-size: 14px; }
+    .bar div { display: flex; align-items: center; justify-content: center; padding: 0 8px; text-align: center; }
+    .bar .a { flex: 10; background: var(--amber); color: #1a1205; }
+    .bar .t { flex: 20; background: var(--blue); }
+    .bar .pp { flex: 70; background: var(--sky); color: #04223a; }
+    .bar-legend { display: flex; justify-content: space-between; color: var(--subtle); font-size: 13px; margin-top: 10px; gap: 8px; }
+    .checklist { list-style: none; padding: 0; margin: 12px 0 0; }
+    .checklist li { padding: 6px 0 6px 26px; position: relative; color: var(--muted); font-size: 15px; }
+    .checklist li::before { content: ""; position: absolute; left: 0; top: 12px; width: 14px; height: 8px; border-left: 2px solid var(--sky); border-bottom: 2px solid var(--sky); transform: rotate(-45deg); }
+
+    /* Myths */
+    .myth { display: grid; grid-template-columns: 1fr 1fr; gap: 0; padding: 0; overflow: hidden; }
+    .myth > div { padding: 18px 20px; }
+    .myth .m { background: rgba(239,68,68,.08); border-right: 1px solid var(--card-border); }
+    .myth .f { background: rgba(16,185,129,.07); }
+    .tag { font-size: 11px; font-weight: 800; letter-spacing: .12em; display: block; margin-bottom: 6px; }
+    .m .tag { color: #f87171; } .f .tag { color: #34d399; }
+    .myth .m strong { font-size: 16px; }
+    .myth .f span.t { color: var(--muted); font-size: 15px; }
+    @media (max-width: 520px) { .myth { grid-template-columns: 1fr; } .myth .m { border-right: 0; border-bottom: 1px solid var(--card-border); } }
+
+    /* Levels */
+    .levels-nav { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; margin-bottom: 20px; }
+    @media (max-width: 700px) { .levels-nav { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+    .lvl-btn { text-align: left; background: var(--card); color: var(--text); border: 1px solid var(--card-border); border-radius: 14px; padding: 14px 16px; cursor: pointer; font: inherit; transition: border-color .15s, background .15s; }
+    .lvl-btn:hover { border-color: rgba(56,189,248,.5); }
+    .lvl-btn[aria-selected="true"] { background: rgba(37,99,235,.25); border-color: var(--sky); }
+    .lvl-btn small { display: block; font-size: 11px; font-weight: 800; letter-spacing: .12em; color: var(--sky); }
+    .lvl-btn span { font-weight: 700; }
+    .lvl-panel { display: none; }
+    .lvl-panel.active { display: block; }
+    .lvl-head { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: baseline; margin-bottom: 16px; }
+    .lvl-head h3 { font-size: 24px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .chip { font-size: 13px; padding: 5px 12px; border-radius: 999px; background: rgba(201,216,242,.1); color: var(--muted); }
+    .chip.warn { background: rgba(245,158,11,.14); color: var(--amber); }
+    .usecases { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+    @media (max-width: 800px) { .usecases { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+    @media (max-width: 480px) { .usecases { grid-template-columns: 1fr; } }
+    .uc { padding: 16px; border-radius: 12px; background: rgba(255,255,255,.035); border: 1px solid var(--card-border); }
+    .uc b { display: block; margin-bottom: 2px; }
+    .uc span { color: var(--subtle); font-size: 14px; }
+    .try { margin-top: 18px; padding: 18px 20px; border-radius: 14px; background: rgba(56,189,248,.08); border: 1px dashed rgba(56,189,248,.45); }
+    .try .tag { color: var(--sky); }
+    .try p { margin: 0; color: var(--text); }
+    .note { color: var(--subtle); font-size: 14px; margin-top: 16px; }
+
+    /* Skill flow */
+    .flow { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 10px; align-items: stretch; }
+    .flow .arrow { align-self: center; color: var(--subtle); font-size: 22px; }
+    @media (max-width: 760px) { .flow { grid-template-columns: 1fr; } .flow .arrow { transform: rotate(90deg); justify-self: center; } }
+    .letter { font-size: 15px; color: var(--muted); }
+    .letter p { margin: 0 0 6px; }
+    .letter mark { background: rgba(245,158,11,.18); color: var(--text); padding: 0 3px; border-radius: 4px; }
+
+    /* Autonomy */
+    .ladder { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 12px; }
+    @media (max-width: 860px) { .ladder { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+    @media (max-width: 480px) { .ladder { grid-template-columns: 1fr; } }
+    .rung .n { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; margin-bottom: 12px; background: rgba(56,189,248,.15); color: var(--sky); }
+    .rung:nth-child(3) .n, .rung:nth-child(4) .n { background: rgba(245,158,11,.15); color: var(--amber); }
+    .rung .who { font-size: 13px; font-weight: 700; color: var(--sky); margin-bottom: 4px; }
+    .rung .eg { margin-top: 10px; font-size: 14px; color: var(--subtle); }
+    .scale { display: flex; justify-content: space-between; color: var(--subtle); font-size: 13px; margin-top: 12px; }
+
+    /* Data traffic light */
+    .light { border-top: 4px solid; }
+    .light.g { border-top-color: var(--green); } .light.y { border-top-color: var(--amber); } .light.r { border-top-color: var(--red); }
+    .light .rule { margin-top: 10px; font-weight: 700; font-size: 14px; }
+    .light.g .rule { color: #34d399; } .light.y .rule { color: var(--amber); } .light.r .rule { color: #f87171; }
+    .steps { counter-reset: s; }
+    .steps .card { position: relative; padding-top: 46px; }
+    .steps .card::before { counter-increment: s; content: counter(s); position: absolute; top: 16px; left: 22px; font-weight: 800; color: var(--sky); font-size: 18px; }
+
+    /* Timeline */
+    .timeline { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 12px; }
+    @media (max-width: 860px) { .timeline { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+    @media (max-width: 480px) { .timeline { grid-template-columns: 1fr; } }
+    .phase .wk { font-size: 12px; font-weight: 800; letter-spacing: .1em; color: var(--amber); }
+    .phase h3 { font-size: 20px; margin: 4px 0 10px; }
+    .phase ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 15px; }
+    .measures { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; align-items: center; }
+    .measures strong { font-size: 13px; letter-spacing: .1em; color: var(--subtle); margin-right: 6px; }
+
+    /* Do / don't */
+    .do li::before { border-color: var(--green); }
+    .dont li::before { content: "×"; border: 0; transform: none; top: 3px; color: #f87171; font-weight: 800; font-size: 18px; width: auto; height: auto; }
+
+    /* 30 day */
+    .todo { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+    .todo label { display: flex; gap: 14px; align-items: flex-start; padding: 16px 18px; border-radius: 14px; background: var(--card); border: 1px solid var(--card-border); cursor: pointer; }
+    .todo input { margin-top: 4px; width: 18px; height: 18px; accent-color: var(--amber); flex: none; }
+    .todo input:checked + div { opacity: .55; text-decoration: line-through; }
+    .todo div b { display: block; }
+    .todo div span { color: var(--subtle); font-size: 14px; }
+    .progress { margin-top: 14px; color: var(--subtle); font-size: 14px; }
+
+    /* Download */
+    .download { text-align: center; padding: 56px 24px; border-radius: 24px; background: radial-gradient(600px 300px at 50% 0%, rgba(37,99,235,.5), transparent 70%), var(--bg-2); border: 1px solid var(--card-border); }
+    .download .lead { margin: 0 auto 28px; }
+    .file-meta { color: var(--subtle); font-size: 13px; margin-top: 14px; }
+
+    footer { padding: 36px 0 48px; color: var(--subtle); font-size: 14px; border-top: 1px solid var(--card-border); }
+    footer .container { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <nav class="nav" aria-label="Main">
+    <div class="container">
+      <a class="brand" href="#top"><span class="dot" style="background:var(--sky)"></span><span class="dot" style="background:var(--blue)"></span><span class="dot" style="background:var(--amber)"></span>&nbsp;People, Process, AI</a>
+      <div class="nav-links">
+        <a href="#today">Today</a>
+        <a href="#myths">Myths</a>
+        <a href="#levels">4 levels</a>
+        <a href="#data">Data</a>
+        <a href="#programme">12 weeks</a>
+        <a href="#start">Start</a>
+      </div>
+      <a class="btn btn-primary btn-sm" href="downloads/People-Process-AI.pptx" download>Download deck</a>
+    </div>
+  </nav>
+
+  <main id="main">
+    <!-- HERO -->
+    <header class="hero" id="top">
+      <div class="container">
+        <p class="eyebrow">AI for the charity sector</p>
+        <h1>People, Process, AI:<br><span class="accent">making innovation deliver impact</span></h1>
+        <p class="lead">How to go from experimenting with AI to real impact for the people you serve. This page is the short version of the talk. Download the slides for the full story.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="downloads/People-Process-AI.pptx" download>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download the slides (.pptx)
+          </a>
+          <a class="btn btn-ghost" href="#levels">Jump to the 4 levels</a>
+        </div>
+        <div class="pillars" aria-label="The three pillars">
+          <span class="pill p">People</span><span class="pill-plus">+</span>
+          <span class="pill pr">Process</span><span class="pill-plus">+</span>
+          <span class="pill ai">AI</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- BIG IDEA -->
+    <section class="block" id="idea">
+      <div class="container split">
+        <div>
+          <p class="eyebrow">The big idea</p>
+          <h2>The technology is the easy part</h2>
+          <p class="section-intro" style="margin-bottom:24px">BCG's 10-20-70 rule: only 10% of the value from AI comes from the algorithms. 20% comes from technology and data. The other 70% comes from people and processes.</p>
+          <div class="bar" role="img" aria-label="10% algorithms, 20% technology and data, 70% people and processes">
+            <div class="a">10%</div><div class="t">20%</div><div class="pp">70% People &amp; processes</div>
+          </div>
+          <div class="bar-legend"><span>Algorithms</span><span>Technology &amp; data</span><span>People &amp; processes</span></div>
+        </div>
+        <div class="grid g2">
+          <div class="card">
+            <h3 style="color:var(--sky)">People</h3>
+            <ul class="checklist">
+              <li>Name team champions</li>
+              <li>Make it safe to experiment</li>
+              <li>Protect wellbeing</li>
+              <li>Celebrate the wins</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3 style="color:#7aa5ff">Process</h3>
+            <ul class="checklist">
+              <li>Map the process first</li>
+              <li>Redesign it, don't bolt AI on</li>
+              <li>Keep humans in the loop</li>
+              <li>Measure and adjust</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TODAY -->
+    <section class="block alt" id="today">
+      <div class="container">
+        <p class="eyebrow">Where charities are today</p>
+        <h2>Most charities use AI. Few get impact from it.</h2>
+        <p class="section-intro">Using AI isn't the same as getting value from it. The gaps are in skills, leadership and governance, not access to tools.</p>
+        <div class="grid g4">
+          <div class="card stat"><div class="num">63%</div><h3>Usage is basic</h3><p>Mostly admin tasks</p></div>
+          <div class="card stat"><div class="num">1 in 3</div><h3>Leadership gap</h3><p>Boards rated poor on AI skills</p></div>
+          <div class="card stat"><div class="num">44%</div><h3>Governance bottleneck</h3><p>No action taken on AI risk</p></div>
+          <div class="card stat"><div class="num">56%</div><h3>Digital skills gap</h3><p>Skills are the #1 barrier</p></div>
+        </div>
+        <div class="callout">79% of charities use AI, but adoption isn't the same as impact.</div>
+        <p class="source">Source: Charity Digital Skills Report 2026 (Amar &amp; Ramsay), 807 charities.</p>
+      </div>
+    </section>
+
+    <!-- MYTHS -->
+    <section class="block" id="myths">
+      <div class="container">
+        <p class="eyebrow">Myths and facts</p>
+        <h2>Clear up four common myths first</h2>
+        <p class="section-intro">Most of the worry about AI comes from a few misunderstandings. Deal with them early so your team can get started.</p>
+        <div class="grid g2">
+          <div class="card myth"><div class="m"><span class="tag">MYTH</span><strong>“AI will replace our staff”</strong></div><div class="f"><span class="tag">FACT</span><span class="t">So far it saves about 3% of time, with no measurable effect on jobs yet.</span></div></div>
+          <div class="card myth"><div class="m"><span class="tag">MYTH</span><strong>“AI means less work”</strong></div><div class="f"><span class="tag">FACT</span><span class="t">Saved time quickly fills up with new work.</span></div></div>
+          <div class="card myth"><div class="m"><span class="tag">MYTH</span><strong>“AI is always right”</strong></div><div class="f"><span class="tag">FACT</span><span class="t">It can be confidently wrong, so always check it.</span></div></div>
+          <div class="card myth"><div class="m"><span class="tag">MYTH</span><strong>“What I type stays private”</strong></div><div class="f"><span class="tag">FACT</span><span class="t">Only put personal data into approved tools.</span></div></div>
+        </div>
+        <div class="callout" style="background:rgba(56,189,248,.08);border-color:rgba(56,189,248,.35)">
+          <strong>The Jevons paradox:</strong> when something becomes more efficient, people use more of it, not less. Plan for this and protect your team's wellbeing.
+        </div>
+        <p class="source">Source: Humlum &amp; Vestergaard (2025), <em>Large Language Models, Small Labor Market Effects</em>, NBER w33777.</p>
+      </div>
+    </section>
+
+    <!-- LEVELS -->
+    <section class="block alt" id="levels">
+      <div class="container">
+        <p class="eyebrow">The path to adoption</p>
+        <h2>The four levels of AI use</h2>
+        <p class="section-intro">Each level builds on the one before. About 80% of people are at Level 1. Most organisations stall between Levels 2 and 3. Move up when your policy, skills and data are ready.</p>
+
+        <div class="levels-nav" role="tablist" aria-label="AI usage levels">
+          <button class="lvl-btn" role="tab" id="tab-1" aria-controls="lvl-1" aria-selected="true"><small>LEVEL 1</small><span>Chat interface</span></button>
+          <button class="lvl-btn" role="tab" id="tab-2" aria-controls="lvl-2" aria-selected="false" tabindex="-1"><small>LEVEL 2</small><span>Skills &amp; templates</span></button>
+          <button class="lvl-btn" role="tab" id="tab-3" aria-controls="lvl-3" aria-selected="false" tabindex="-1"><small>LEVEL 3</small><span>Make it agentic</span></button>
+          <button class="lvl-btn" role="tab" id="tab-4" aria-controls="lvl-4" aria-selected="false" tabindex="-1"><small>LEVEL 4</small><span>AI harness</span></button>
+        </div>
+
+        <div class="card">
+          <div class="lvl-panel active" id="lvl-1" role="tabpanel" aria-labelledby="tab-1">
+            <div class="lvl-head"><h3>Ask and get answers</h3></div>
+            <div class="chips"><span class="chip">~80% of people are here</span><span class="chip">You ask, it answers</span><span class="chip warn">Needs an AI policy</span></div>
+            <div class="usecases">
+              <div class="uc"><b>Drafting</b><span>Emails, posts, thank-you notes</span></div>
+              <div class="uc"><b>First drafts</b><span>Grant and trust bids</span></div>
+              <div class="uc"><b>Summarising</b><span>Reports and meeting notes</span></div>
+              <div class="uc"><b>Rewriting</b><span>Plain English, accessible formats</span></div>
+              <div class="uc"><b>Brainstorming</b><span>Campaigns and events</span></div>
+              <div class="uc"><b>Simple research</b><span>Desk reviews</span></div>
+            </div>
+            <div class="try"><span class="tag">TRY THIS</span><p>Paste a public report and ask: <em>“Rewrite the key findings in plain English for a 12-year-old reader, in five bullet points.”</em> Then check every fact against the original.</p></div>
+          </div>
+
+          <div class="lvl-panel" id="lvl-2" role="tabpanel" aria-labelledby="tab-2" hidden>
+            <div class="lvl-head"><h3>Teach it once</h3></div>
+            <div class="chips"><span class="chip">Builds on Level 1</span><span class="chip warn">Needs digital skills</span><span class="chip">A real increase in speed</span></div>
+            <div class="usecases">
+              <div class="uc"><b>Grant writer skill</b><span>Your impact data and tone</span></div>
+              <div class="uc"><b>Brand voice skill</b><span>Always sounds like you</span></div>
+              <div class="uc"><b>Policy Q&amp;A</b><span>Handbook and safeguarding</span></div>
+              <div class="uc"><b>Templated docs</b><span>Board papers, Gift Aid letters</span></div>
+              <div class="uc"><b>Volunteer assistant</b><span>Induction and training</span></div>
+              <div class="uc"><b>Simple data work</b><span>Donor lists, surveys</span></div>
+            </div>
+            <div class="try"><span class="tag">TRY THIS</span><p>Write one page covering your charity's tone of voice, three impact facts and words to avoid. Save it as a project or custom instruction, and use it for every supporter email.</p></div>
+          </div>
+
+          <div class="lvl-panel" id="lvl-3" role="tabpanel" aria-labelledby="tab-3" hidden>
+            <div class="lvl-head"><h3>AI that acts, not just answers</h3></div>
+            <div class="chips"><span class="chip warn">The cliff for most organisations</span><span class="chip">Whole jobs done</span><span class="chip">People stay in control</span></div>
+            <div class="usecases">
+              <div class="uc"><b>Adviser copilots</b><span>e.g. Citizens Advice's Caddy</span></div>
+              <div class="uc"><b>Out-of-hours triage</b><span>Urgent cases go to staff</span></div>
+              <div class="uc"><b>Fundraising agents</b><span>Prospects, trusts, deadlines</span></div>
+              <div class="uc"><b>Supporter care</b><span>Inbox, replies, CRM</span></div>
+              <div class="uc"><b>Case-note agents</b><span>Call summaries, follow-ups</span></div>
+              <div class="uc"><b>Insight agents</b><span>e.g. Parkinson's UK</span></div>
+            </div>
+            <div class="try"><span class="tag">TRY THIS</span><p>Pick one repetitive, low-risk workflow, such as logging event sign-ups into a spreadsheet. Map every step on paper before you automate any of them.</p></div>
+          </div>
+
+          <div class="lvl-panel" id="lvl-4" role="tabpanel" aria-labelledby="tab-4" hidden>
+            <div class="lvl-head"><h3>Everything connected</h3></div>
+            <div class="chips"><span class="chip">Context from all your systems</span><span class="chip">Systems and agents in harmony</span><span class="chip warn">Governed by design</span></div>
+            <div class="usecases">
+              <div class="uc"><b>Orchestration</b><span>Agents hand work on to each other</span></div>
+              <div class="uc"><b>Shared context</b><span>One governed knowledge base</span></div>
+              <div class="uc"><b>Guardrails</b><span>GDPR and safeguarding rules</span></div>
+              <div class="uc"><b>Observability</b><span>Test, log and audit</span></div>
+              <div class="uc"><b>Human in the loop</b><span>Approvals based on risk</span></div>
+              <div class="uc"><b>Cost management</b><span>Usage and spend tracking</span></div>
+            </div>
+            <div class="try"><span class="tag">TRY THIS</span><p>List every system that holds supporter or beneficiary data. Note who owns each one and whether it could share data safely. That list is the start of your harness.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS EXAMPLE -->
+    <section class="block" id="skills">
+      <div class="container">
+        <p class="eyebrow">Level 2 in practice</p>
+        <h2>How skills and templates work</h2>
+        <p class="section-intro">A <strong>skill</strong> is like a new volunteer's briefing pack. A <strong>template</strong> is the form they fill in. Write them once, and you get the same quality every time.</p>
+        <div class="flow">
+          <div class="card">
+            <span class="tag" style="color:var(--sky)">YOUR REQUEST</span>
+            <h3>“Thank Sarah for her £25 gift”</h3>
+            <p style="margin-top:12px">Plus the <b style="color:var(--text)">skill</b> (your voice, facts and rules) and the <b style="color:var(--text)">template</b> (the structure to follow).</p>
+          </div>
+          <div class="arrow" aria-hidden="true">→</div>
+          <div class="card" style="display:grid;place-items:center;text-align:center">
+            <div>
+              <div style="font-size:34px;font-weight:800;color:var(--amber)">AI</div>
+              <p>Combines all three</p>
+            </div>
+          </div>
+          <div class="arrow" aria-hidden="true">→</div>
+          <div class="card letter">
+            <span class="tag" style="color:#34d399">ON-BRAND, EVERY TIME</span>
+            <p>Dear Sarah,</p>
+            <p>Your £25 gives <mark>ten families a hot meal</mark> this week.</p>
+            <p><mark>Add Gift Aid: it's worth £31.25</mark> at no extra cost.</p>
+            <p><mark>Warm wishes, Jo, CEO</mark></p>
+          </div>
+        </div>
+        <div class="chips" style="margin-top:20px"><span class="chip">Write it once</span><span class="chip">Same quality for everyone</span><span class="chip">Easy to update</span></div>
+      </div>
+    </section>
+
+    <!-- AUTONOMY -->
+    <section class="block alt" id="autonomy">
+      <div class="container">
+        <p class="eyebrow">Level 3 in practice</p>
+        <h2>Agent autonomy: who's in the driving seat?</h2>
+        <p class="section-intro">Example: a supporter emails to update their details. How much should AI do on its own?</p>
+        <div class="ladder">
+          <div class="card rung"><div class="n">1</div><div class="who">ASSISTANT</div><h3>You do it, AI helps</h3><p class="eg">You ask, then make the change yourself.</p></div>
+          <div class="card rung"><div class="n">2</div><div class="who">COPILOT</div><h3>AI suggests, you decide</h3><p class="eg">AI drafts the reply, you check and send it.</p></div>
+          <div class="card rung"><div class="n">3</div><div class="who">AGENT</div><h3>AI acts, you check</h3><p class="eg">AI makes the change and flags anything unusual.</p></div>
+          <div class="card rung"><div class="n">4</div><div class="who">AUTONOMOUS</div><h3>AI acts within rules</h3><p class="eg">AI handles it, you review weekly.</p></div>
+        </div>
+        <div class="scale"><span>← More human control</span><span>More autonomy →</span></div>
+        <div class="callout"><strong>Rule of thumb:</strong> the more sensitive the task, the more human sign-off it needs.</div>
+      </div>
+    </section>
+
+    <!-- DATA -->
+    <section class="block" id="data">
+      <div class="container">
+        <p class="eyebrow">Data strategy</p>
+        <h2>Good AI starts with good data</h2>
+        <p class="section-intro">Four steps to get your data ready, and a simple rule for what can go into an AI tool.</p>
+        <div class="grid g4 steps">
+          <div class="card"><h3>Know it</h3><p>Where does your data live?</p></div>
+          <div class="card"><h3>Clean it</h3><p>Fix duplicates and gaps</p></div>
+          <div class="card"><h3>Protect it</h3><p>GDPR, consent, safeguarding</p></div>
+          <div class="card"><h3>Connect it</h3><p>One trusted source</p></div>
+        </div>
+        <h3 style="margin:40px 0 16px;font-size:22px">What can go into AI?</h3>
+        <div class="grid g3">
+          <div class="card light g"><h3>Public</h3><p>Reports, website content</p><div class="rule">Any approved tool</div></div>
+          <div class="card light y"><h3>Internal</h3><p>Policies, plans</p><div class="rule">Secure work tools only</div></div>
+          <div class="card light r"><h3>Personal</h3><p>Beneficiary and donor data</p><div class="rule">Only with sign-off</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS NEEDED -->
+    <section class="block alt" id="people">
+      <div class="container">
+        <p class="eyebrow">Digital skills</p>
+        <h2>Skills are the biggest barrier</h2>
+        <p class="section-intro">56% of charities say skills are the biggest barrier to AI, and 1 in 3 boards are rated poor on AI skills. Different people need different things.</p>
+        <div class="grid g3">
+          <div class="card"><h3>Everyone</h3><ul class="checklist"><li>Safe use</li><li>Clear prompts</li><li>Checking outputs</li></ul></div>
+          <div class="card"><h3>Champions</h3><ul class="checklist"><li>Build skills and templates</li><li>Coach colleagues</li><li>Share wins</li></ul></div>
+          <div class="card"><h3>Leaders &amp; trustees</h3><ul class="checklist"><li>AI vision</li><li>Risk and governance</li><li>Asking the right questions</li></ul></div>
+        </div>
+        <div class="chips" style="margin-top:20px"><span class="chip warn">Build it through:</span><span class="chip">Lunch &amp; learns</span><span class="chip">Show-and-tells</span><span class="chip">Peer buddies</span></div>
+        <p class="source">Source: Charity Digital Skills Report 2026.</p>
+      </div>
+    </section>
+
+    <!-- PROGRAMME -->
+    <section class="block" id="programme">
+      <div class="container">
+        <p class="eyebrow">A practical plan</p>
+        <h2>A 12-week AI adoption programme</h2>
+        <p class="section-intro">A step-by-step way to move from Level 1 towards Level 3 without skipping the people and process work.</p>
+        <div class="timeline">
+          <div class="card phase"><div class="wk">WEEKS 1–2</div><h3>1 · Discover</h3><ul><li>Readiness check</li><li>AI policy and guardrails</li><li>Pick 3–5 champions</li></ul></div>
+          <div class="card phase"><div class="wk">WEEKS 3–6</div><h3>2 · Enable</h3><ul><li>AI basics for all</li><li>Shared prompt library</li><li>Quick-win pilots</li></ul></div>
+          <div class="card phase"><div class="wk">WEEKS 7–10</div><h3>3 · Build</h3><ul><li>3 skills or templates</li><li>Measure time and quality</li><li>Community of practice</li></ul></div>
+          <div class="card phase"><div class="wk">WEEKS 11–12</div><h3>4 · Scale</h3><ul><li>First agent pilot</li><li>Trustee roadmap</li><li>Scale what works</li></ul></div>
+        </div>
+        <div class="measures"><strong>HOW TO MEASURE SUCCESS</strong><span class="chip">Adoption</span><span class="chip">Time released</span><span class="chip">Quality</span><span class="chip">Confidence</span></div>
+
+        <div class="grid g2" style="margin-top:40px">
+          <div class="card">
+            <h3>Not adopted AI yet? Start here</h3>
+            <ul class="checklist do">
+              <li>Identify champions</li>
+              <li>Set up KPIs</li>
+              <li>Build a community</li>
+              <li>Find the efficiencies</li>
+              <li>Design AI-native processes</li>
+              <li>Enable creativity</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Pitfalls to avoid</h3>
+            <ul class="checklist dont">
+              <li>Productivity burnout</li>
+              <li>KPIs that add tasks</li>
+              <li>No strategy</li>
+              <li>No security strategy</li>
+              <li>No AI policy</li>
+              <li>No data strategy</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 30 DAYS -->
+    <section class="block alt" id="start">
+      <div class="container">
+        <p class="eyebrow">Your next 30 days</p>
+        <h2>What's one thing you'll try?</h2>
+        <p class="section-intro">Pick one or two of these. Tick them off as you go. Your progress is saved in this browser only.</p>
+        <ul class="todo" id="todo">
+          <li><label><input type="checkbox" data-id="policy"><div><b>Check you have an AI policy</b><span>If you don't, draft a one-page version: approved tools, what data can go in, and who to ask.</span></div></label></li>
+          <li><label><input type="checkbox" data-id="champion"><div><b>Name one AI champion in your team</b><span>Someone curious who will try things and share what works.</span></div></label></li>
+          <li><label><input type="checkbox" data-id="task"><div><b>Pick the task that eats most of your week</b><span>Write down its steps, then test whether AI can do one step for you.</span></div></label></li>
+          <li><label><input type="checkbox" data-id="voice"><div><b>Write a one-page brand voice skill</b><span>Tone, impact facts, words to avoid. Reuse it for every draft.</span></div></label></li>
+          <li><label><input type="checkbox" data-id="data"><div><b>Sort your data into public, internal and personal</b><span>Share the traffic-light rule with your team.</span></div></label></li>
+          <li><label><input type="checkbox" data-id="share"><div><b>Run a 20-minute show-and-tell</b><span>Share one win and one thing AI got wrong.</span></div></label></li>
+        </ul>
+        <p class="progress" id="progress" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <!-- DOWNLOAD -->
+    <section class="block" id="download">
+      <div class="container">
+        <div class="download">
+          <p class="eyebrow">Get the full deck</p>
+          <h2>Download the slides</h2>
+          <p class="lead">All 24 slides with the stats, use cases, autonomy ladder and 12-week plan. Use them with your team or trustees.</p>
+          <a class="btn btn-primary" href="downloads/People-Process-AI.pptx" download>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download PowerPoint (.pptx)
+          </a>
+          <div class="file-meta">People-Process-AI.pptx · 2.9 MB · opens in PowerPoint, Keynote or Google Slides</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <span>People, Process, AI · Presented by Jamel de la Fuente</span>
+      <a href="#top">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <script>
+    // Level tabs
+    (function () {
+      const tabs = Array.from(document.querySelectorAll('.lvl-btn'));
+      function select(tab) {
+        tabs.forEach(t => {
+          const on = t === tab;
+          t.setAttribute('aria-selected', on);
+          t.tabIndex = on ? 0 : -1;
+          const panel = document.getElementById(t.getAttribute('aria-controls'));
+          panel.hidden = !on;
+          panel.classList.toggle('active', on);
+        });
+      }
+      tabs.forEach((t, i) => {
+        t.addEventListener('click', () => select(t));
+        t.addEventListener('keydown', e => {
+          if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+          const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+          select(next); next.focus();
+        });
+      });
+    })();
+
+    // 30-day checklist (saved per browser)
+    (function () {
+      const KEY = 'ppai-30day';
+      const boxes = Array.from(document.querySelectorAll('#todo input'));
+      const out = document.getElementById('progress');
+      let saved = {};
+      try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) {}
+      function update() {
+        const done = boxes.filter(b => b.checked).length;
+        out.textContent = done ? `${done} of ${boxes.length} done. Nice work.` : '';
+      }
+      boxes.forEach(b => {
+        b.checked = !!saved[b.dataset.id];
+        b.addEventListener('change', () => {
+          saved[b.dataset.id] = b.checked;
+          try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+          update();
+        });
+      });
+      update();
+    })();
+  </script>
+</body>
+</html>
